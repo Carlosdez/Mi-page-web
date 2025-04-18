@@ -106,7 +106,7 @@
     <div class="note">📱 Escanea con Google Lens o Cámara del iPhone para guardar el contacto</div>
   </div>
 
-  <!-- Importamos QRCode.js -->
+
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
   <script>
@@ -142,10 +142,10 @@
         text: vCard,
         width: 200,
         height: 200,
-        useSVG: false // Forzamos usar imagen para que funcione en iOS
+        useSVG: false
       });
 
-      // Esperamos medio segundo para obtener el src de la imagen
+
       setTimeout(() => {
         const img = qrContainer.querySelector("img");
         if (img) {
