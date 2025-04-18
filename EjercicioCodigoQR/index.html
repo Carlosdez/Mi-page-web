@@ -83,6 +83,13 @@
     .download-btn:hover {
       background-color: #1f7d36;
     }
+
+    .note {
+      font-size: 14px;
+      color: #555;
+      margin-top: 12px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -96,9 +103,12 @@
     <button id="generateBtn">Generar Código QR</button>
     <div id="qrcode"></div>
     <a id="downloadBtn" class="download-btn" download="contacto_qr.png">⬇ Descargar Código QR</a>
+    <div class="note">📱 Escanea con Google Lens o Cámara del iPhone para guardar el contacto</div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Importamos QRCode.js -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
   <script>
     const generateBtn = document.getElementById("generateBtn");
     const downloadBtn = document.getElementById("downloadBtn");
@@ -132,8 +142,10 @@
         text: vCard,
         width: 200,
         height: 200,
+        useSVG: false // Forzamos usar imagen para que funcione en iOS
       });
 
+      // Esperamos medio segundo para obtener el src de la imagen
       setTimeout(() => {
         const img = qrContainer.querySelector("img");
         if (img) {
