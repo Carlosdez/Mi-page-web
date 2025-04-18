@@ -1,153 +1,147 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Formulario de Contacto - Código QR</title>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulario de Contacto</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #e3f2fd, #bbdefb); /* azul claro degradado */
-      margin: 0;
-      padding: 40px;
+      background: linear-gradient(to right, #dceefd, #b4dcff);
+      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
     }
 
     .container {
-      background-color: white;
+      background-color: #ffffff;
       padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       width: 100%;
-      max-width: 500px;
+      max-width: 400px;
     }
 
     h2 {
       text-align: center;
+      color: #003366;
       margin-bottom: 20px;
-      color: #0d47a1; /* azul oscuro */
     }
 
     input {
       width: 100%;
       padding: 12px;
-      margin: 10px 0;
+      margin-bottom: 12px;
       border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 8px;
+      background-color: #f0f7ff;
     }
 
     button {
-      background-color: #007BFF;
-      color: white;
-      padding: 14px;
       width: 100%;
-      border: none;
-      border-radius: 6px;
-      margin-top: 20px;
-      cursor: pointer;
+      padding: 12px;
       font-size: 16px;
-      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #generateBtn {
+      background-color: #007bff;
+      color: white;
+      margin-top: 10px;
       transition: background-color 0.3s ease;
     }
 
-    button:hover {
+    #generateBtn:hover {
       background-color: #0056b3;
     }
 
     #qrcode {
-      margin-top: 30px;
+      margin: 20px auto;
       display: flex;
       justify-content: center;
-      align-items: center;
     }
 
     .download-btn {
-      margin-top: 15px;
-      text-align: center;
-    }
-
-    .download-btn a {
-      display: inline-block;
-      padding: 12px 24px;
+      display: none;
       background-color: #28a745;
       color: white;
-      border-radius: 6px;
+      text-align: center;
+      padding: 12px 0;
       text-decoration: none;
+      font-size: 16px;
       font-weight: bold;
-      font-size: 15px;
+      border-radius: 8px;
+      width: 100%;
+      margin-top: 10px;
       transition: background-color 0.3s ease;
     }
 
-    .download-btn a:hover {
-      background-color: #218838;
+    .download-btn:hover {
+      background-color: #1f7d36;
     }
   </style>
 </head>
 <body>
-
-<div class="container">
-  <h2>Formulario de Contacto</h2>
-  <form id="contact-form">
-    <input type="text" id="nombre" placeholder="Nombre" required>
-    <input type="text" id="apellido" placeholder="Apellido" required>
-    <input type="tel" id="telefono" placeholder="Teléfono" required>
-    <input type="email" id="email" placeholder="Correo Electrónico">
-    <input type="text" id="direccion" placeholder="Dirección">
-    <button type="submit">Generar Código QR</button>
-  </form>
-
-  <div id="qrcode"></div>
-  <div class="download-btn" id="download-area" style="display: none;">
-    <a id="download-link" download="contacto.png">Descargar QR</a>
+  <div class="container">
+    <h2>Formulario de Contacto</h2>
+    <input type="text" id="nombre" placeholder="Nombre" />
+    <input type="text" id="apellido" placeholder="Apellido" />
+    <input type="tel" id="telefono" placeholder="Teléfono" />
+    <input type="email" id="email" placeholder="Correo electrónico" />
+    <input type="text" id="direccion" placeholder="Dirección" />
+    <button id="generateBtn">Generar Código QR</button>
+    <div id="qrcode"></div>
+    <a id="downloadBtn" class="download-btn" download="contacto_qr.png">⬇ Descargar Código QR</a>
   </div>
-</div>
 
-<script>
-  const form = document.getElementById("contact-form");
-  const qrcodeContainer = document.getElementById("qrcode");
-  const downloadArea = document.getElementById("download-area");
-  const downloadLink = document.getElementById("download-link");
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const generateBtn = document.getElementById("generateBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
 
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
+    generateBtn.addEventListener("click", () => {
+      const nombre = document.getElementById("nombre").value.trim();
+      const apellido = document.getElementById("apellido").value.trim();
+      const telefono = document.getElementById("telefono").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const direccion = document.getElementById("direccion").value.trim();
 
-    const nombre = document.getElementById("nombre").value.trim();
-    const apellido = document.getElementById("apellido").value.trim();
-    const telefono = document.getElementById("telefono").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const direccion = document.getElementById("direccion").value.trim();
-
-    const vCard = `BEGIN:VCARD
-VERSION:3.0
-N:${apellido};${nombre}
-FN:${nombre} ${apellido}
-TEL;TYPE=CELL:${telefono}
-EMAIL:${email}
-ADR;TYPE=HOME:;;${direccion}
-END:VCARD`;
-
-    qrcodeContainer.innerHTML = "";
-    downloadArea.style.display = "none";
-
-    const qr = new QRCode(qrcodeContainer, {
-      text: vCard,
-      width: 256,
-      height: 256,
-      correctLevel: QRCode.CorrectLevel.H
-    });
-
-    setTimeout(() => {
-      const qrCanvas = qrcodeContainer.querySelector("canvas");
-      if (qrCanvas) {
-        const dataURL = qrCanvas.toDataURL("image/png");
-        downloadLink.href = dataURL;
-        downloadArea.style.display = "block";
+      if (!nombre || !apellido || !telefono) {
+        alert("Nombre, apellido y teléfono son obligatorios.");
+        return;
       }
-    }, 300);
-  });
-</script>
 
+      const vCard = 
+        "BEGIN:VCARD\n" +
+        "VERSION:3.0\n" +
+        `N:${apellido};${nombre};;;\n` +
+        `FN:${nombre} ${apellido}\n` +
+        `TEL;TYPE=CELL:${telefono}\n` +
+        (email ? `EMAIL:${email}\n` : "") +
+        (direccion ? `ADR;TYPE=HOME:;;${direccion};;;;\n` : "") +
+        "END:VCARD";
+
+      const qrContainer = document.getElementById("qrcode");
+      qrContainer.innerHTML = "";
+
+      const qr = new QRCode(qrContainer, {
+        text: vCard,
+        width: 200,
+        height: 200,
+      });
+
+      setTimeout(() => {
+        const img = qrContainer.querySelector("img");
+        if (img) {
+          downloadBtn.href = img.src;
+          downloadBtn.style.display = "block";
+        }
+      }, 500);
+    });
+  </script>
 </body>
 </html>
