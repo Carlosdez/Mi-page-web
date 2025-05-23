@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulario de Contacto</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #dceefd, #b4dcff);
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f0f7ff;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #generateBtn {
+      background-color: #007bff;
+      color: white;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    #generateBtn:hover {
+      background-color: #0056b3;
+    }
+
+    #qrcode {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .download-btn {
+      display: none;
+      background-color: #28a745;
+      color: white;
+      text-align: center;
+      padding: 12px 0;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      width: 100%;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background-color: #1f7d36;
+    }
+
+    .note {
+      font-size: 14px;
+      color: #555;
+      margin-top: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Formulario de Contacto</h2>
+    <input type="text" id="nombre" placeholder="Nombre" />
+    <input type="text" id="apellido" placeholder="Apellido" />
+    <input type="tel" id="telefono" placeholder="Teléfono" />
+    <input type="email" id="email" placeholder="Correo electrónico" />
+    <input type="text" id="direccion" placeholder="Dirección" />
+    <button id="generateBtn">Generar Código QR</button>
+    <div id="qrcode"></div>
+    <a id="downloadBtn" class="download-btn" download="contacto_qr.png">⬇ Descargar Código QR</a>
+    <div class="note">📱 Escanea con Google Lens o Cámara del iPhone para guardar el contacto</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <script>
+    const generateBtn = document.getElementById("generateBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+
+    generateBtn.addEventListener("click", () => {
+      const nombre = document.getElementById("nombre").value.trim();
+      const apellido = document.getElementById("apellido").value.trim();
+      const telefono = document.getElementById("telefono").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const direccion = document.getElementById("direccion").value.trim();
+
+      if (!nombre || !apellido || !telefono) {
+        alert("Nombre, apellido y teléfono son obligatorios.");
+        return;
+      }
+
+      const vCard = 
+        "BEGIN:VCARD\n" +
+        "VERSION:3.0\n" +
+        `N:${apellido};${nombre};;;\n` +
+        `FN:${nombre} ${apellido}\n` +
+        `TEL;TYPE=CELL:${telefono}\n` +
+        (email ? `EMAIL:${email}\n` : "") +
+        (direccion ? `ADR;TYPE=HOME:;;${direccion};;;;\n` : "") +
+        "END:VCARD";
+
+      const qrContainer = document.getElementById("qrcode");
+      qrContainer.innerHTML = "";
+
+      const qr = new QRCode(qrContainer, {
+        text: vCard,
+        width: 200,
+        height: 200,
+        useSVG: false 
+      });
+
+
+      setTimeout(() => {
+        const img = qrContainer.querySelector("img");
+        if (img) {
+          downloadBtn.href = img.src;
+          downloadBtn.style.display = "block";
+        }
+      }, 500);
+    });
+  </script>
+</body>
+</html>
