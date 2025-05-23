@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BancoNEXT - Innovando para Ti</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('3.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: #003366;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .exchange-rates {
+            background-color: #f1f1f1;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 18px;
+            color: #003366;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #003366;
+            padding: 15px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            padding: 0;
+        }
+        .nav-links li {
+            margin: 0 15px;
+            position: relative;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 10;
+        }
+        .dropdown-menu li {
+            padding: 10px;
+            white-space: nowrap;
+        }
+        .dropdown-menu a {
+            color: #003366;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .contenido {
+            padding: 50px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            max-width: 900px;
+            margin: 40px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .boton {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #003366;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .boton:hover {
+            background: #002255;
+        }
+        .contacto {
+            text-align: center;
+            padding: 15px;
+            background-color: #003366;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="exchange-rates">
+        <p>Tasa de cambio: 1 USD = 62.06 DOP | 1 EUR = 65.06 DOP</p>
+    </div>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="2.jpeg" alt="BancoNEXT Logo">
+                BancoNEXT
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="#">Productos</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Cuentas de Ahorro</a></li>
+                        <li><a href="#">Cuentas Corrientes</a></li>
+                        <li><a href="#">Tarjetas</a></li>
+                        <li><a href="#">Préstamos</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Servicios</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Banca en Línea</a></li>
+                        <li><a href="#">Seguros</a></li>
+                        <li><a href="#">Inversiones</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Nosotros</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Historia</a></li>
+                        <li><a href="#">Misión y Visión</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="contenido">
+            <h1>Bienvenido a BancoNEXT</h1>
+            <p>Tu futuro financiero comienza aquí. Descubre nuestros productos y servicios diseñados para ti.</p>
+            <a href="#" class="boton">Explorar</a>
+        </section>
+    </main>
+    <footer class="contacto">
+        <p>Contacto: 849-423-4912 | info@banconext.com</p>
+    </footer>
+    <script>
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            dropdown.addEventListener('mouseover', function () {
+                this.querySelector('.dropdown-menu').style.display = 'block';
+            });
+            dropdown.addEventListener('mouseleave', function () {
+                this.querySelector('.dropdown-menu').style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

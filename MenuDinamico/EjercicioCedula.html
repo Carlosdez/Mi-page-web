@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar Cédula - Módulo 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background: linear-gradient(to right, #4CAF50, #A9A9A9);
+            color: white;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+        }
+        input {
+            width: 250px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #resultado {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Validación de Cédula - Algoritmo Módulo 10</h2>
+    <p>Ingrese la cédula dominicana sin guiones:</p>
+    <input type="text" id="cedula" placeholder="Ejemplo: 00112345632">
+    <button onclick="validarCedula()">Validar</button>
+    <p id="resultado"></p>
+
+    <script>
+        function validarCedula() {
+            let cedula = document.getElementById("cedula").value;
+            cedula = cedula.replace(/\D/g, ''); 
+
+            if (cedula.length !== 11) {
+                document.getElementById("resultado").innerText = "CÉDULA ES INCORRECTA";
+                return;
+            }
+
+            let suma = 0;
+            for (let i = 0; i < 10; i++) {
+                let digito = parseInt(cedula[i]);
+                if (i % 2 === 1) {
+                    digito *= 2;
+                    if (digito > 9) digito -= 9;
+                }
+                suma += digito;
+            }
+
+            let digitoVerificadorCalculado = (10 - (suma % 10)) % 10;
+            let digitoVerificadorReal = parseInt(cedula[10]);
+
+            if (digitoVerificadorCalculado === digitoVerificadorReal) {
+                document.getElementById("resultado").innerText = "CÉDULA ES CORRECTA";
+            } else {
+                document.getElementById("resultado").innerText = "CÉDULA ES INCORRECTA";
+            }
+        }
+    </script>
+</body>
+</html>
